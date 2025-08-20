@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numan Usta Menü</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2ffd8);
+      background-size: 1000% 1000%;
+      animation: gradientBG 20s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* ---------------- NAVBAR ---------------- */
+    header {
+      backdrop-filter: blur(12px);
+      background: rgba(211,47,47,0.9);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      animation: fadeInDown 1s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.4em;
+    }
+
+    .logo i {
+      font-size: 1.6em;
+      color: #fff176;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 25px;
+      font-size: 0.55em;
+    }
+
+    .contact-info div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.3s, color 0.3s;
+      cursor: default;
+    }
+
+    .contact-info div:hover {
+      transform: scale(1.05);
+      color: #ffeb3b;
+    }
+
+    .contact-info i {
+      color: #fff;
+      font-size: 1.2em;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .contact-info {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+
+    /* ---------------- FİLTRE & MENÜ ---------------- */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 25px auto;
+      flex-wrap: wrap;
+    }
+
+    .filter-bar button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #ff6b6b, #c62828);
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      transition: all .3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .filter-bar button.active,
+    .filter-bar button:hover {
+      background: linear-gradient(135deg, #c62828, #ff6b6b);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(255,100,100,0.7);
+    }
+
+    .search-box {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .search-box input {
+      width: 70%;
+      max-width: 500px;
+      padding: 14px 22px;
+      border-radius: 30px;
+      border: 2px solid #ff6b6b;
+      font-size: 1.1em;
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: .3s;
+    }
+
+    .search-box input:focus {
+      box-shadow: 0 0 20px rgba(255,80,80,0.8);
+      border-color: #d32f2f;
+      transform: scale(1.05);
+    }
+
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto 50px;
+    }
+
+    .menu-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      transition: transform .4s, box-shadow .4s;
+      opacity: 0;
+      animation: fadeInUp .6s forwards;
+      position: relative;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-12px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(198,40,40,0.5);
+      border-image: linear-gradient(135deg, #ff6b6b, #c62828) 1;
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .menu-card:hover img {
+      transform: scale(1.1) rotate(1deg);
+    }
+
+    .menu-card-content {
+      padding: 18px;
+      text-align: center;
+      transition: transform .3s;
+    }
+
+    .menu-card-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      color: #333;
+      transition: color .3s;
+    }
+
+    .menu-card-content p {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #c62828;
+      margin-bottom: 10px;
+    }
+
+    .menu-card:hover .menu-card-content h3 {
+      color: #c62828;
+    }
+
+    /* Animasyonlar */
+    @keyframes fadeInDown {
+      from {opacity:0; transform: translateY(-40px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity:0; transform: translateY(40px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-utensils"></i> Numan Usta Menü
+    </div>
+    <div class="contact-info">
+      <div><i class="fas fa-phone"></i> +90 272 214 40 30</div>
+      <div><i class="fas fa-map-marker-alt"></i> Burmalı Mh. 22.Sk. No:10 Afyonkarahisar</div>
+      <div><i class="fas fa-envelope"></i> info@gmail.com</div>
+    </div>
+  </header>
+
+<body>
+  
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-category="Tümü">Tümü</button>
+    <button class="filter-btn" data-category="Yemek">Yemek</button>
+    <button class="filter-btn" data-category="Çorba">Çorba</button>
+    <button class="filter-btn" data-category="Tatlı">Tatlı</button>
+    <button class="filter-btn" data-category="İçecek">İçecek</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Menüde ara...">
+  </div>
+
+  <div class="menu-container" id="menuContainer"></div>
+
+  <script>
+    const menuItems = [
+      {"name":"Adana Kebap","price":"430 TL","image":"adanakebap.jpg","category":"Yemek"},
+      {"name":"Beyti Kebap","price":"470 TL","image":"beytikebap.jpg","category":"Yemek"},
+      {"name":"Bize Özel Kebap","price":"780 TL","image":"bizeozelkebap.jpg","category":"Yemek"},
+      {"name":"Bonfile Şiş","price":"500 TL","image":"bonfilesis.jpg","category":"Yemek"},
+      {"name":"Çoban Kavurma","price":"430 TL","image":"cobankavurma.jpg","category":"Yemek"},
+      {"name":"Dürüm (70gr - 100gr - 140gr)","price": "240 - 340 - 470 TL","image":"drm.jpg","category":"Yemek"},
+      {"name":"Ekmek Arası (70gr - 100gr - 140gr)","price": "240 - 340 - 470 TL","image":"ekmekarasi.jpg","category":"Yemek"},
+      {"name":"İskender","price":"470 TL","image":"iskender.jpg","category":"Yemek"},
+      {"name":"Izgara Köfte","price":"380 TL","image":"izgarakfte.jpg","category":"Yemek"},
+      {"name":"Karışık Kebap","price":"550 TL","image":"karisikkebap.jpg","category":"Yemek"},
+      {"name":"Sade Döner","price":"430 TL","image":"sadedoner.jpg","category":"Yemek"},
+      {"name":"Sucuk İskender","price":"470 TL","image":"sucukiskender.jpg","category":"Yemek"},
+      {"name":"Sucuk Izgara","price":"430 TL","image":"sckizgara.jpg","category":"Yemek"},
+      {"name":"Tavuk Pirzola","price":"320 TL","image":"tavkpizrolasis.jpg","category":"Yemek"},
+      {"name":"Tombik (70gr - 100gr - 140gr)","price": "240 - 340 - 470 TL","image":"tmbik.jpg","category":"Yemek"},
+      {"name":"Ezogelin Çorbası (Tam - Az)","price": "100 - 70 TL","image":"ezogelin.jpg","category":"Çorba"},
+      {"name":"Mercimek Çorbası (Tam - Az)","price": "100 - 70 TL","image":"mercimekcorbasi.jpg","category":"Çorba"},
+      {"name":"Tandır Çorbası (Tam - Az)","price": "120 - 80 TL","image":"tandirçorbasi.jpg","category":"Çorba"},
+      {"name":"Kabak Tatlısı (Sade - Kaymaklı)","price": "100 - 200 TL","image":"kabaktatlisi.jpg","category":"Tatlı"},
+      {"name":"Ekmek Kadayıfı (Sade - Kaymaklı)","price": "100 - 200 TL","image":"ekmekkadayifi.jpg","category":"Tatlı"},
+      {"name":"Maraş Dondurması","price":"80 TL","image":"marasdondurmasi.jpg","category":"Tatlı"},
+      {"name":"Sütlaç (Sade - Kaymaklı)","price": "100 - 200 TL","image":"stlac.jpg","category":"Tatlı"},
+      {"name":"Havuç Dilimi (Sade - Dondurmalı - Kaymaklı)","price": "200 - 250 - 300 TL","image":"havucdilimi.jpg","category":"Tatlı"},
+      {"name":"Ayran","price":"30 TL","image":"ayran.jpg","category":"İçecek"},
+      {"name":"Yayık Ayran","price":"50 TL","image":"yayikayran.jpg","category":"İçecek"},
+      {"name":"Soda","price":"20 TL","image":"soda.jpg","category":"İçecek"},
+      {"name":"Meyveli Soda","price":"25 TL","image":"meyvelisoda.jpg","category":"İçecek"},
+      {"name":"Su","price":"15 TL","image":"su.jpg","category":"İçecek"},
+      {"name":"330 Ml Kutu İçecek","price":"50 TL","image":"kutuicecek.jpg","category":"İçecek"},
+      {"name":"Şalgam","price":"40 TL","image":"salgam.jpg","category":"İçecek"},
+      {"name":"Şifalı Demirhindi Şerbeti","price":"40 TL","image":"serbet.jpg","category":"İçecek"}
+    ];
+
+    const menuContainer = document.getElementById('menuContainer');
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    let activeCategory = "Tümü";
+
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .replace(/ı/g, "i")
+        .replace(/ğ/g, "g")
+        .replace(/ü/g, "u")
+        .replace(/ş/g, "s")
+        .replace(/ö/g, "o")
+        .replace(/ç/g, "c");
+    }
+
+    function displayMenu() {
+      const searchTerm = normalizeText(searchInput.value);
+      menuContainer.innerHTML = '';
+
+      let visibleIdx = 0;
+
+      menuItems.forEach((item) => {
+        if ((activeCategory === "Tümü" || item.category === activeCategory) &&
+            normalizeText(item.name).includes(searchTerm)) {
+          const card = `
+            <div class="menu-card" style="animation-delay:${visibleIdx * 0.1}s">
+              <img src="${item.image}" alt="${item.name}">
+              <div class="menu-card-content">
+                <h3>${item.name}</h3>
+                <p>${item.price}</p>
+              </div>
+            </div>
+          `;
+          menuContainer.innerHTML += card;
+          visibleIdx++;
+        }
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCategory = btn.getAttribute('data-category');
+        displayMenu();
+      });
+    });
+
+    searchInput.addEventListener('input', displayMenu);
+
+    displayMenu();
+  </script>
+</body>
+</html>
